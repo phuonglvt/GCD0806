@@ -1,4 +1,4 @@
-﻿@model GCD0806.Models.Todo
+﻿@model GCD0806.ViewModel.TodoCategoryViewModel
 @{
     ViewBag.Title = "Edit";
 }
@@ -9,18 +9,25 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 <div class="form-group">
     <label>Description: </label>
-    @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
-    @Html.ValidationMessageFor(m => m.Description, "Please enter Todo description!",
+    @Html.TextBoxFor(m => m.Todo.Description, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Todo.Description, "Please enter Todo description!",
        new { @class = "text-danger" })
 </div>
 <div class="form-group">
     <label>Due Date: </label>
-    @Html.TextBoxFor(m => m.DueDate, new { @class = "form-control", type = "date" })
-    @Html.ValidationMessageFor(m => m.DueDate, "Please enter Todo Due Date!",
+    @Html.TextBoxFor(m => m.Todo.DueDate, new { @class = "form-control", type = "date" })
+    @Html.ValidationMessageFor(m => m.Todo.DueDate, "Please enter Todo Due Date!",
         new { @class = "text-danger" })
 </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Edit Todo</button>
-    </div>
+<div class="form-group">
+    <label>Category</label>
+    @Html.DropDownListFor(m => m.Todo.CategoryId,
+       new SelectList(Model.Category, "ID", "Description"),
+       new { @class = "form-control" }
+       )
+</div>
+<div class="form-group">
+    <button type="submit" class="btn btn-primary">Edit Todo</button>
+</div>
 }
 

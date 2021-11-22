@@ -88,7 +88,12 @@ namespace GCD0806.Controllers
             {
                 return HttpNotFound();
             }
-            return View(todo);
+            var viewModel = new TodoCategoryViewModel()
+            {
+                Todo = todo,
+                Category = _context.Categories.ToList()
+            };
+            return View(viewModel);
         }
         [HttpPost]
         public ActionResult Edit(Todo model)
