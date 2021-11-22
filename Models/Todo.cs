@@ -11,15 +11,20 @@ namespace GCD0806.Models
     {
         [Key]
         public int Id { get; set; }
+        [ForeignKey("User")]
+        public string UserId { get; set; }
+        public ApplicationUser User { get; set; }
         [Required]
         [StringLength(255)]
         public string Description { get; set; }
-        [Required]
-        public DateTime DueDate { get; set; }
-        [ForeignKey ("Category")]
+        [ForeignKey("Category")]
         //Tạo cột CategoryID
         public int CategoryId { get; set; }
         //Nối Todo vs Category (linking obj)
         public Category Category { get; set; }
+        [Required]
+        public DateTime DueDate { get; set; }
+        
+        
     }
 }

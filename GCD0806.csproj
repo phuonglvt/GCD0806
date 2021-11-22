@@ -204,6 +204,10 @@
     <Compile Include="Migrations\202111221929523_AddFKToTodoTable.designer.cs">
       <DependentUpon>202111221929523_AddFKToTodoTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202111222345167_AddUserIdToTodoTable.cs" />
+    <Compile Include="Migrations\202111222345167_AddUserIdToTodoTable.designer.cs">
+      <DependentUpon>202111222345167_AddUserIdToTodoTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -317,6 +321,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202111221929523_AddFKToTodoTable.resx">
       <DependentUpon>202111221929523_AddFKToTodoTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111222345167_AddUserIdToTodoTable.resx">
+      <DependentUpon>202111222345167_AddUserIdToTodoTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
