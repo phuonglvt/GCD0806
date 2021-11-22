@@ -6,10 +6,10 @@ using System.Web;
 
 namespace GCD0806.ViewModel
 {
-    public class Todo_CategoryViewModel
+    public class TodoCategoryViewModel
     {
         public Todo Todo { get; set; }
-        public IEnumerator<Category> Category { get; set; }
+        public List<Category> Category { get; set; }
 
     }
 }

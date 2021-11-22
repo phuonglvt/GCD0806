@@ -1,4 +1,5 @@
 ﻿using GCD0806.Models;
+using GCD0806.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,12 @@ namespace GCD0806.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            return View();
+            var categories = _context.Categories.ToList();
+            var viewModel = new TodoCategoryViewModel()
+            {
+                Category = categories
+            };
+            return View(viewModel);
         }
         [HttpPost]
         public ActionResult Create(Todo model)
