@@ -96,20 +96,27 @@ namespace GCD0806.Controllers
             return View(viewModel);
         }
         [HttpPost]
-        public ActionResult Edit(Todo model)
+        public ActionResult Edit(TodoCategoryViewModel model)
         {
+            
             if (!ModelState.IsValid)
             {
-                return View(model);
+                var viewModel = new TodoCategoryViewModel()
+                {
+                    Todo = model.Todo,
+                    Category = _context.Categories.ToList()
+                };
+                return View(viewModel);
             }
-            var todoInDb = _context.Todos.SingleOrDefault(t => t.Id == model.Id);
+            var todoInDb = _context.Todos.SingleOrDefault(t => t.Id == model.Todo.Id);
             if (todoInDb == null)
             {
                 return HttpNotFound();
             }
 
-            todoInDb.Description = model.Description;
-            todoInDb.DueDate = model.DueDate;
+            todoInDb.Description = model.Todo.Description;
+            todoInDb.DueDate = model.Todo.DueDate;
+            todoInDb.CategoryId = model.Todo.CategoryId;
             _context.SaveChanges();
 
             return RedirectToAction("Index");
