@@ -169,14 +169,46 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\TodoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202111181834140_CreateTodoTable.cs" />
+    <Compile Include="Migrations\202111181834140_CreateTodoTable.designer.cs">
+      <DependentUpon>202111181834140_CreateTodoTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111190154540_TodoTable.cs" />
+    <Compile Include="Migrations\202111190154540_TodoTable.designer.cs">
+      <DependentUpon>202111190154540_TodoTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111190158256_TodoTableModification.cs" />
+    <Compile Include="Migrations\202111190158256_TodoTableModification.designer.cs">
+      <DependentUpon>202111190158256_TodoTableModification.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111190203060_TodoTableModification1.cs" />
+    <Compile Include="Migrations\202111190203060_TodoTableModification1.designer.cs">
+      <DependentUpon>202111190203060_TodoTableModification1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111191451463_ModifyTodoModel.cs" />
+    <Compile Include="Migrations\202111191451463_ModifyTodoModel.designer.cs">
+      <DependentUpon>202111191451463_ModifyTodoModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111192146364_CreateCategoryTable.cs" />
+    <Compile Include="Migrations\202111192146364_CreateCategoryTable.designer.cs">
+      <DependentUpon>202111192146364_CreateCategoryTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111221929523_AddFKToTodoTable.cs" />
+    <Compile Include="Migrations\202111221929523_AddFKToTodoTable.designer.cs">
+      <DependentUpon>202111221929523_AddFKToTodoTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ApplicationDbContext.cs" />
+    <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\Category.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Todo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -239,6 +271,13 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Todo\Index.cshtml" />
+    <Content Include="Views\Todo\Details.cshtml" />
+    <Content Include="Views\Todo\Create.cshtml" />
+    <Content Include="Views\Todo\Edit.cshtml" />
+    <Content Include="Views\Category\Index.cshtml" />
+    <Content Include="Views\Category\Create.cshtml" />
+    <Content Include="Views\Category\Delete.cshtml" />
+    <Content Include="Views\Category\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -255,6 +294,29 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202111181834140_CreateTodoTable.resx">
+      <DependentUpon>202111181834140_CreateTodoTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111190154540_TodoTable.resx">
+      <DependentUpon>202111190154540_TodoTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111190158256_TodoTableModification.resx">
+      <DependentUpon>202111190158256_TodoTableModification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111190203060_TodoTableModification1.resx">
+      <DependentUpon>202111190203060_TodoTableModification1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111191451463_ModifyTodoModel.resx">
+      <DependentUpon>202111191451463_ModifyTodoModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111192146364_CreateCategoryTable.resx">
+      <DependentUpon>202111192146364_CreateCategoryTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111221929523_AddFKToTodoTable.resx">
+      <DependentUpon>202111221929523_AddFKToTodoTable.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

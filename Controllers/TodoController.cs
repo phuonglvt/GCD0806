@@ -9,38 +9,93 @@ namespace GCD0806.Controllers
 {
     public class TodoController : Controller
     {
+        private ApplicationDbContext _context;
+        public TodoController()
+        {
+            _context = new ApplicationDbContext();
+        }
         // GET: Todo
         public ActionResult Index()
         {
-            
-            var todos = new List<Todo>()
-            {
-                new Todo()
-                {
-                    Id = 1,
-                    Descripition = "Buy Drink",
-                    DueDate =new DateTime(2021,11,20)
-                },
-                new Todo()
-                {
-                    Id = 2,
-                    Descripition = "Buy Fresh",
-                    DueDate =new DateTime(2020,01,15)
-                },
-                new Todo()
-                {
-                    Id = 3,
-                    Descripition = "Buy Fish",
-                    DueDate =new DateTime(2021,09,10)
-                },
-                new Todo()
-                {
-                    Id = 4,
-                    Descripition = "Buy Meat",
-                    DueDate =new DateTime(2021,10,10)
-                },
-            };
+            var todos = _context.Todos
+                .Include("Category") //Nếu không có, CateID Null, Không hiển thị đc, phải include obj để hiển thị Des của CateID
+                .ToList();
             return View(todos);
+        }
+        public ActionResult Details(int id)
+        {
+            var todo = _context.Todos
+                .Include("Category")
+                .SingleOrDefault(t => t.Id == id);
+            if(todo == null)
+            {
+                return HttpNotFound();
+            }    
+            return View(todo);
+        }
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Create(Todo model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var newTodo = new Todo()
+            {
+                Description = model.Description,
+                DueDate = model.DueDate
+            };
+
+            _context.Todos.Add(newTodo);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            var todo = _context.Todos.SingleOrDefault(t => t.Id == id);
+            if (todo == null)
+            {
+                return HttpNotFound();
+            }
+            _context.Todos.Remove(todo);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            var todo = _context.Todos.SingleOrDefault(t => t.Id == id);
+            if (todo == null)
+            {
+                return HttpNotFound();
+            }
+            return View(todo);
+        }
+        [HttpPost]
+        public ActionResult Edit(Todo model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var todoInDb = _context.Todos.SingleOrDefault(t => t.Id == model.Id);
+            if (todoInDb == null)
+            {
+                return HttpNotFound();
+            }
+
+            todoInDb.Description = model.Description;
+            todoInDb.DueDate = model.DueDate;
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
         }
     }
 }

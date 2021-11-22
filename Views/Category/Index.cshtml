@@ -1,0 +1,36 @@
+﻿@model IEnumerable<GCD0806.Models.Category>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>My Categories</h2>
+
+<div class="form-group">
+    @Html.ActionLink("Create a new Categories", "Create", null,
+    new { @class = "btn btn-primary" }
+    )
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID </th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cate in Model)
+        {
+            <tr>
+                <td>@cate.ID </td>
+                <td>@cate.Description</td>
+                <td>
+                    @Html.ActionLink("Edit Category","Edit", new { id = cate.ID }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Delete this", "Delete", new { id = cate.ID },
+                        new { @class = "btn btn-danger", onClick = "return confirm ('Are you sure ?')" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

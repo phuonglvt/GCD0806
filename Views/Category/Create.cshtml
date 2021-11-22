@@ -1,0 +1,19 @@
+﻿@model GCD0806.Models.Category
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+@using (Html.BeginForm("Create", "Category", FormMethod.Post))
+{
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <label>Description: </label>
+        @Html.TextBoxFor(m => m.Description, "", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Description, "Please enter Todo description!",
+            new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Create a new Todo</button>
+    </div>
+}
