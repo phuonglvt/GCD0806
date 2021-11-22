@@ -45,16 +45,22 @@ namespace GCD0806.Controllers
             return View(viewModel);
         }
         [HttpPost]
-        public ActionResult Create(Todo model)
+        public ActionResult Create(TodoCategoryViewModel model)
         {
             if (!ModelState.IsValid)
             {
+                var viewModel = new TodoCategoryViewModel()
+                {
+                    Todo = model.Todo,
+                    Category = _context.Categories.ToList()
+                };
                 return View(model);
             }
             var newTodo = new Todo()
             {
-                Description = model.Description,
-                DueDate = model.DueDate
+                Description = model.Todo.Description,
+                DueDate = model.Todo.DueDate,
+                CategoryId = model.Todo.CategoryId
             };
 
             _context.Todos.Add(newTodo);
