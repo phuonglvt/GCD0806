@@ -9,18 +9,34 @@
 </div>
 
 <div class="row">
-    <div class="col-md-4">
-        <h2> User Functionability</h2>
-        <p>
-            For Users
-        </p>
-    </div>
-    <div class="col-md-4">
-        <h2> Manager Functionability</h2>
-        <p>For Manager</p>
-    </div>
-    <div class="col-md-4">
-        <h2> Admin Functionability</h2>
-        <p>For Admin</p>
-    </div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        if (User.IsInRole(GCD0806.Utils.Role.User))
+        {
+            <div class="col-md-4">
+                <h2> User Functionability</h2>
+                <p>
+                    For Users
+                </p>
+            </div>
+        }
+        else if(User.IsInRole(GCD0806.Utils.Role.Manager))
+            {
+                <div class="col-md-4">
+                    <h2> Manager Functionability</h2>
+                    <p>@Html.ActionLink("Show All Teams", "Index", "Team", null, new {@class ="btn btn-primary"})</p>
+                </div>
+            }
+
+        else if (User.IsInRole(GCD0806.Utils.Role.Admin))
+        {
+            <div class="col-md-4">
+                <h2> Admin Functionability</h2>
+                <p>
+                    @Html.ActionLink("Create new Manager Acount","CreateManager","Admin",null, new {@class ="btn btn-primary"})
+                </p>
+            </div>
+        }
+    }
+
 </div>

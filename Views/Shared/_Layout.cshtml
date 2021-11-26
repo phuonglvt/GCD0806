@@ -19,15 +19,27 @@
                 </button>
                 @Html.ActionLink("GCD0806-AppDev", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
+
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("My Todos", "Index","Todo")</li>
-                    <li>@Html.ActionLink("My Categories","Index","Category")</li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (User.IsInRole(GCD0806.Utils.Role.User))
+                        {
+                            <li>@Html.ActionLink("My Todos", "Index", "Todo")</li>
+                        }
+                        else if (User.IsInRole(GCD0806.Utils.Role.Manager) || User.IsInRole(GCD0806.Utils.Role.Admin))
+                        {
+                            <li>@Html.ActionLink("My Categories", "Index", "Category")</li>
+                            <li>@Html.ActionLink("Manage Teams", "Index", "Team")</li>
+                        }
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
+
     <div class="container body-content">
         @RenderBody()
         <hr />

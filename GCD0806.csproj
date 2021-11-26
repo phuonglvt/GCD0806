@@ -168,10 +168,14 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Attribute\Unique.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ManagerController.cs" />
+    <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Controllers\TodoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -208,16 +212,37 @@
     <Compile Include="Migrations\202111222345167_AddUserIdToTodoTable.designer.cs">
       <DependentUpon>202111222345167_AddUserIdToTodoTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202111230200592_ModifyCategoryTable.cs" />
+    <Compile Include="Migrations\202111230200592_ModifyCategoryTable.designer.cs">
+      <DependentUpon>202111230200592_ModifyCategoryTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111252036235_AddTeamsTabletToDb.cs" />
+    <Compile Include="Migrations\202111252036235_AddTeamsTabletToDb.designer.cs">
+      <DependentUpon>202111252036235_AddTeamsTabletToDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111252130488_AddUserTeamTable.cs" />
+    <Compile Include="Migrations\202111252130488_AddUserTeamTable.designer.cs">
+      <DependentUpon>202111252130488_AddUserTeamTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111260304507_MidifyTeamTable.cs" />
+    <Compile Include="Migrations\202111260304507_MidifyTeamTable.designer.cs">
+      <DependentUpon>202111260304507_MidifyTeamTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Team.cs" />
     <Compile Include="Models\Todo.cs" />
+    <Compile Include="Models\UserTeam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utils\Role.cs" />
+    <Compile Include="ViewModel\TeamUsersViewModel.cs" />
     <Compile Include="ViewModel\TodoCategoryViewModel.cs" />
+    <Compile Include="ViewModel\UsersTeamsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -283,9 +308,16 @@
     <Content Include="Views\Category\Create.cshtml" />
     <Content Include="Views\Category\Delete.cshtml" />
     <Content Include="Views\Category\Edit.cshtml" />
+    <Content Include="Views\Team\Create.cshtml" />
+    <Content Include="Views\Team\Index.cshtml" />
+    <Content Include="Views\Team\AddUser.cshtml" />
+    <Content Include="Views\Team\RemoveUser.cshtml" />
+    <Content Include="Views\Admin\CreateManager.cshtml" />
+    <Content Include="Views\Team\ShowTeam.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Manager\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -324,6 +356,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202111222345167_AddUserIdToTodoTable.resx">
       <DependentUpon>202111222345167_AddUserIdToTodoTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111230200592_ModifyCategoryTable.resx">
+      <DependentUpon>202111230200592_ModifyCategoryTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111252036235_AddTeamsTabletToDb.resx">
+      <DependentUpon>202111252036235_AddTeamsTabletToDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111252130488_AddUserTeamTable.resx">
+      <DependentUpon>202111252130488_AddUserTeamTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111260304507_MidifyTeamTable.resx">
+      <DependentUpon>202111260304507_MidifyTeamTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

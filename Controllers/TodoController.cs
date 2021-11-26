@@ -1,4 +1,5 @@
 ﻿using GCD0806.Models;
+using GCD0806.Utils;
 using GCD0806.ViewModel;
 using Microsoft.AspNet.Identity;
 using System;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 
 namespace GCD0806.Controllers
 {
+    [Authorize(Roles = Role.User)]//Chỉ có user mới đăng nhập vào được
     public class TodoController : Controller
     {
         private ApplicationDbContext _context;
@@ -17,13 +19,20 @@ namespace GCD0806.Controllers
             _context = new ApplicationDbContext();
         }
         // GET: Todo
-        public ActionResult Index()
+        [HttpGet]
+        public ActionResult Index(string searchString)
         {
             var userId = User.Identity.GetUserId();
             var todos = _context.Todos
                 .Include("Category") //Nếu không có, CateID Null, Không hiển thị đc, phải include obj để hiển thị Des của CateID
                 .Where(t => t.UserId == userId)
                 .ToList();
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                todos = todos
+                    .Where(t => t.Description.ToLower().Contains(searchString.ToLower()) || t.Category.Description.ToLower().Contains(searchString.ToLower()))
+                    .ToList();
+            }
             return View(todos);
         }
         public ActionResult Details(int id)
@@ -106,8 +115,7 @@ namespace GCD0806.Controllers
         }
         [HttpPost]
         public ActionResult Edit(TodoCategoryViewModel model)
-        {
-            
+        {           
             if (!ModelState.IsValid)
             {
                 var viewModel = new TodoCategoryViewModel()

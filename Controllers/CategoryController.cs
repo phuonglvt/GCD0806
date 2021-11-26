@@ -1,4 +1,5 @@
 ﻿using GCD0806.Models;
+using GCD0806.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Web.Mvc;
 
 namespace GCD0806.Controllers
 {
+    [Authorize(Roles = Role.Manager)]
     public class CategoryController : Controller
     {
         private ApplicationDbContext _context;
@@ -67,11 +69,16 @@ namespace GCD0806.Controllers
         [HttpPost]
         public ActionResult Edit(Category model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
             var cateInDb = _context.Categories.SingleOrDefault(c => c.ID == model.ID);
             if(cateInDb == null)
             {
                 return HttpNotFound();
             }
+            
             cateInDb.Description = model.Description;
             _context.SaveChanges();
             return RedirectToAction("Index");

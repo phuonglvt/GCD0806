@@ -10,6 +10,14 @@
     )
 </div>
 
+@using (Html.BeginForm("Index","Todo",FormMethod.Get))
+            {
+                <div class="form-group">
+                    @Html.TextBox("searchString", null, new {@class ="form-control", placeholder ="Search by todo name or category" })
+                </div>
+                <button type="submit" class="btn btn-primary"> Search</button>
+            }
+
 <table class="table">
     <thead>
         <tr>

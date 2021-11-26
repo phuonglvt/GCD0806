@@ -7,17 +7,18 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using GCD0806.Models;
+using GCD0806.Utils;
 
 namespace GCD0806.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = Role.Manager)]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
         public ManageController()
         {
+
         }
 
         public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
