@@ -17,25 +17,76 @@ namespace GCD0806.Controllers
         {
             _context = new ApplicationDbContext();
         }
-        public ActionResult ShowTeam()
-        {
-            var teams = _context.Teams.ToList();
-            return View(teams);
-        }
+        
         // GET: Team
         [HttpGet]
         public ActionResult Index()
         {
-            List<TeamUsersViewModel> viewModel = _context.UserTeams
-                .GroupBy(i => i.Team)
-                .Select(res => new TeamUsersViewModel
-                {
-                    Team = res.Key,
-                    User = res.Select(u => u.User).ToList()
-                })
+            var teams = _context.Teams
+        .OrderBy(m => m.Id)
+        .ToList();
+            return View(teams);
+        }
+
+        [HttpGet]
+        public ActionResult ShowUsers(int id)
+        {
+            var users = _context.UserTeams
+                .Where(i => i.TeamId == id)
+                .Select(i => i.User)
                 .ToList();
+            return View(users);
+        }
+
+        [HttpGet]
+        public ActionResult AssignUser()
+        {
+            var role = _context.Roles
+              .SingleOrDefault(r => r.Name.Equals(Role.User));
+            var users = _context.Users
+              .Where(m => m.Roles.Any(r => r.RoleId.Equals(role.Id)))
+              .ToList();
+            var viewModel = new TeamUsersViewModel
+            {
+                Teams = _context.Teams.ToList(),
+                Users = users
+            };
             return View(viewModel);
         }
+
+        [HttpPost]
+        public ActionResult AssignUser(TeamUsersViewModel viewModel)
+        {
+            var model = new UserTeam
+            {
+                TeamId = viewModel.TeamId,
+                UserId = viewModel.UserId
+            };
+
+            try
+            {
+                _context.UserTeams.Add(model);
+                _context.SaveChanges();
+            }
+            catch (System.Exception)
+            {
+                ModelState.AddModelError("duplicate", "User already existed in Team");
+                var role = _context.Roles
+                .SingleOrDefault(r => r.Name.Equals(Role.User));
+                var users = _context.Users
+                  .Where(m => m.Roles.Any(r => r.RoleId.Equals(role.Id)))
+                  .ToList();
+                var newViewModel = new TeamUsersViewModel
+                {
+                    Teams = _context.Teams.ToList(),
+                    Users = users
+                };
+                return View(newViewModel);
+            }
+
+            return RedirectToAction("Index");
+        }
+
         [HttpGet]
         public ActionResult Create()
         {
@@ -52,35 +103,18 @@ namespace GCD0806.Controllers
             {
                 Name = team.Name
             };
-            _context.Teams.Add(newTeam);
-            _context.SaveChanges();
+            try
+            {
+                _context.Teams.Add(newTeam);
+                _context.SaveChanges();
+            }
+            catch(System.Exception)
+            {
+                ModelState.AddModelError("Duplicate", "Team name already existed");
+            }
             return RedirectToAction("Index", "Team");
         }
-        [HttpGet]
-        public ActionResult AddUser()
-        {
-            var role = _context.Roles.SingleOrDefault(m => m.Name == Role.User);
-            var viewModel = new UsersTeamsViewModel()
-            {
-                Teams = _context.Teams.ToList(),
-                Users = _context.Users.Where(m => m.Roles.Any(r => r.RoleId == role.Id)).ToList()
-            };
-            return View(viewModel);
-        }
-        [HttpPost]
-        public ActionResult AddUser(UsersTeamsViewModel viewModel)
-        {
-            var model = new UserTeam
-            {
-                TeamId = viewModel.TeamId,
-                UserId = viewModel.UserId
-            };
-            _context.UserTeams.Add(model);
-            _context.SaveChanges();
 
-            return RedirectToAction("Index", "Team");
-
-        }
         [HttpGet]
         public ActionResult RemoveUser()
         {
@@ -102,10 +136,15 @@ namespace GCD0806.Controllers
         [HttpPost]
         public ActionResult RemoveUser(UsersTeamsViewModel viewModel)
         {
+            if (viewModel is null)
+            {
+                throw new ArgumentNullException(nameof(viewModel));
+            }
+
             var userTeam = _context.UserTeams
                 .SingleOrDefault(t => t.TeamId == viewModel.TeamId && t.UserId == viewModel.UserId);
 
-            if(userTeam == null)
+            if (userTeam == null)
             {
                 return HttpNotFound();
             }

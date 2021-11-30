@@ -1,38 +1,32 @@
-﻿@model IEnumerable<GCD0806.ViewModel.TeamUsersViewModel>
+﻿@model IEnumerable<GCD0806.Models.Team>
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>All Teams</h2>
 <div class="form-group">
-    @Html.ActionLink("Create a new Team","Create","Team",new {@class ="btn btn-primary"})
+    @Html.ActionLink("Create a new Team", "Create", null, new { @class = "btn btn-primary" })
+    
 </div>
 <table class="table table-striped">
     <thead>
         <tr>
             <th scope="col">Team Name</th>
             <th scope="col">Team Members</th>
-            <th scope="col">Add Team Members</th>
+            <th scope="col">Actions</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in @Model)
+        @foreach (var team in Model)
         {
-            <tr>
-                <td>@item.Team.Name</td>
-                <td>
-                    <ul>
-                        @foreach(var user in item.User)
-                {
-                    <li>@user.Email</li>
-                }
-                    </ul>
-                </td>
-                <td>
-                    @Html.ActionLink("Add User to Team","AddUser","Team",new {@class ="btn btn-primary"})
-                    @Html.ActionLink("Remove User","RemoveUser","Team",new {@class ="btn btn-primary"})
-                </td>
-            </tr>
+        <tr>
+            <td>@team.Id</td>
+            <td>@team.Name</td>
+            <td>
+                @Html.ActionLink("Show Users", "ShowUsers", new { id = team.Id }, new { @class = "btn btn-success" })
+                @Html.ActionLink("Assign Users", "AssignUser", null, new { @class = "btn btn-success" })
+            </td>
+        </tr>
         }
     </tbody>
 </table>

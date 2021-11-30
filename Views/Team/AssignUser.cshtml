@@ -1,0 +1,29 @@
+﻿@model GCD0806.ViewModel.TeamUsersViewModel
+@{
+    ViewBag.Title = "AssignUser";
+}
+
+<h2>Assign User</h2>
+
+@using (Html.BeginForm("AssignUser", "Team", FormMethod.Post))
+{
+    <div class="form-group">
+        <label>Team</label>
+        @Html.DropDownListFor(
+          m => m.TeamId,
+          new SelectList(Model.Teams, "Id", "Name"),
+          new { @class = "form-control" }
+        )
+    </div>
+    <div class="form-group">
+        <label>Team</label>
+        @Html.DropDownListFor(
+          m => m.UserId,
+          new SelectList(Model.Users, "Id", "Email"),
+          new { @class = "form-control" }
+        )
+        @Html.ValidationMessage("duplicate", new { @class = "text-danger" })
+    </div>
+    <button type="submit" class="btn btn-primary">Assign</button>
+    @Html.ActionLink("Return", "Index", null, new { @class = "btn btn-primary" })
+}

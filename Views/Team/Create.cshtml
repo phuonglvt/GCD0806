@@ -1,6 +1,6 @@
 ﻿@model GCD0806.Models.Team
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create Team";
 }
 
 <h2>Create a new Team</h2>
@@ -11,6 +11,7 @@
         <label>Team Name</label>
         @Html.TextBoxFor(m => m.Name, "", new {@class ="form-control"})
         @Html.ValidationMessageFor(m => m.Name,"", new {@class ="text-danger"})
+        @Html.ValidationMessage("Duplicate", new {@class ="text-danger"})
     </div>
     <button type="submit" class="btn btn-primary">Create a new Team</button>
 

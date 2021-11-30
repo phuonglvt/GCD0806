@@ -1,0 +1,28 @@
+﻿@model IEnumerable<GCD0806.Models.ApplicationUser>
+@{
+    ViewBag.Title = "ShowUsers";
+}
+
+<h2>Show Users in Team</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Team Members</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var team in Model)
+        {
+            <tr>
+                <td>@team.Email</td>
+                <td>
+                    @Html.ActionLink("Remove User", "RemoveUser", "Team", new { @class = "btn btn-primary" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@Html.ActionLink("Return", "Index", null, new { @class = "btn btn-primary" })
+

@@ -79,6 +79,13 @@ namespace GCD0806.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+        //[HttpGet]
+        //public ActionResult GetManager()
+        //{
+
+        //}
+
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
